@@ -26,44 +26,49 @@
     </table>
 </div>
 <h2 class="text-3xl font-bold text-center pt-4">Cars for sell</h2>
+<button class="sort" data-sort="price">
+    Sort by price
+</button>
 <div class="flex flex-col">
     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
             <div class="overflow-hidden">
-                <table class="min-w-full text-center">
-                    <thead class="border-b bg-gray-800">
-                    <tr>
-                        <th scope="col" class="text-sm font-medium text-white px-6 py-4 ">
-                            Car model
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                            Year of production
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                            Color
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                            Price
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($car as $cars)
-                        <tr class="bg-white border-b">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $cars->model }}</td>
-                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                {{ $cars->year }}
-                            </td>
-                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                {{ $cars->color }}
-                            </td>
-                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                {{ $cars->price }} $
-                            </td>
+                <div id="for-sale">
+                    <table class="min-w-full text-center">
+                        <thead class="border-b bg-gray-800">
+                        <tr>
+                            <th scope="col" class="text-sm font-medium text-white px-6 py-4" onclick="sorting(tbody01, 0)">
+                                Car model
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-white px-6 py-4" onclick="sorting(tbody01, 1)">
+                                Year of production
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-white px-6 py-4" onclick="sorting(tbody01, 2)">
+                                Color
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-white px-6 py-4" onclick="sorting(tbody01, 3)">
+                                Price
+                            </th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody id="tbody01">
+                        @foreach($car as $cars)
+                            <tr class="bg-white border-b">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $cars->model }}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                    {{ $cars->year }}
+                                </td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                    {{ $cars->color }}
+                                </td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap price">
+                                    {{ $cars->price }} $
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -85,4 +90,6 @@
         @endforeach
     </table>
 </div>
+<script src="/assets/js/sort.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 </body>

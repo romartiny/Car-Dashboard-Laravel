@@ -50,4 +50,11 @@ class Car extends Model
             ])
             ->get();
     }
+
+    public static function getSellsPerDay()
+    {
+        return count(DB::table('showroom')
+            ->get()
+            ->where('sold', '=', 'true'));
+    }
 }
