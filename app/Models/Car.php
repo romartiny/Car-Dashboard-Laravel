@@ -18,14 +18,6 @@ class Car extends Model
             ->get();
     }
 
-    public static function getSoldDate()
-    {
-        return DB::table('showroom')
-            ->get()
-            ->where('date_of_sell')
-            ->groupBy('date_of_sell');
-    }
-
     public static function getAvgSumAllTime()
     {
         return DB::table('showroom')
@@ -53,8 +45,38 @@ class Car extends Model
 
     public static function getSellsPerDay()
     {
+        return DB::table("showroom")->select(
+            DB::raw("(count(id)) as total_price"),
+            DB::raw("(DATE_FORMAT(date_of_sell, '%Y-%m-%d')) as sell_day")
+        )
+            ->where('sold', '=', 'true')
+            ->orderBy('date_of_sell', 'DESC')
+            ->groupBy(DB::raw('date_of_sell'))
+            ->get();
+    }
+
+    public static function getSoldLastYear()
+    {
+        $lastYear = date('Y-01-01', strtotime("-1 year"));
+        $lastDayOfYear = date('Y-12-31', strtotime("-1 year"));
         return count(DB::table('showroom')
+            ->where('date_of_sell', '>=', "$lastYear")
+            ->where('date_of_sell', '<=', "$lastDayOfYear")
             ->get()
-            ->where('sold', '=', 'true'));
+        );
+    }
+
+    public static function getYearSold()
+    {
+        return count(DB::table('showroom')
+
+            ->where([
+                ['sold', '=', 'true'],
+                ['date_of_sell', '>=', date('Y-01-01', strtotime('-1 year'))],
+                ['date_of_sell', '<=', date('Y-12-31', strtotime('-1 year'))],
+            ])
+            ->groupBy(DB::raw('date_of_sell'))
+            ->get()
+        );
     }
 }

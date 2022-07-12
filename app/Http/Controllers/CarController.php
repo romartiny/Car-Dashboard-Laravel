@@ -10,21 +10,17 @@ class CarController extends Controller
     public function getDashboard()
     {
         return view('dashboard', [
-            'car' => $this->carList(),
-            'date' => $this->dateList(),
+            'carList' => $this->carList(),
             'avgSumAllTime' => $this->avgSumAllTime(),
-            'avgSumToday' => $this->getSumToday()
+            'avgSumToday' => $this->getSumToday(),
+            'sellsPerDay' => $this->getSellForDay(),
+            'avgLastYear' => $this->getAvgLastYear()
         ]);
     }
 
     public function carList()
     {
         return Car::getNotSoldCars();
-    }
-
-    public function dateList()
-    {
-        return Car::getSoldDate();
     }
 
     public function avgSumAllTime()
@@ -37,6 +33,16 @@ class CarController extends Controller
     {
         return empty(Car::getSoldCarsToday()) ? '0' :
             Car::getSoldCarsToday()->sum('sum(price)');
+    }
+
+    public function getSellForDay()
+    {
+        return Car::getSellsPerDay();
+    }
+
+    public function getAvgLastYear()
+    {
+        return Car::getSoldLastYear() / Car::getYearSold();
     }
 
 }

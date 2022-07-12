@@ -23,12 +23,13 @@
             <td class="border px-8 py-4">The average price on the cars sold today</td>
             <td class="border px-8 py-4">{{ $avgSumToday }} $</td>
         </tr>
+        <tr>
+            <td class="border px-8 py-4">Cars sold last year, divided by day</td>
+            <td class="border px-8 py-4">{{ $avgLastYear }}</td>
+        </tr>
     </table>
 </div>
 <h2 class="text-3xl font-bold text-center pt-4">Cars for sell</h2>
-<button class="sort" data-sort="price">
-    Sort by price
-</button>
 <div class="flex flex-col">
     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
@@ -52,7 +53,7 @@
                         </tr>
                         </thead>
                         <tbody id="tbody01">
-                        @foreach($car as $cars)
+                        @foreach($carList as $cars)
                             <tr class="bg-white border-b">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $cars->model }}</td>
                                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
@@ -82,14 +83,13 @@
             <th class="bg-blue-100 border text-left px-8 py-4">Date</th>
             <th class="bg-blue-100 border text-left px-8 py-4">Number of cars sold</th>
         </tr>
-        @foreach($date as $dates => $item)
+        @foreach($sellsPerDay as $sells => $item)
             <tr>
-                <td class="border px-8 py-4">{{ $dates }}</td>
-                <td class="border px-8 py-4">Dante Sparks</td>
+                <td class="border px-8 py-4">{{ $item->sell_day }}</td>
+                <td class="border px-8 py-4">{{ $item->total_price }}</td>
             </tr>
         @endforeach
     </table>
 </div>
 <script src="/assets/js/sort.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 </body>
