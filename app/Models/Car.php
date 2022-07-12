@@ -14,7 +14,7 @@ class Car extends Model
     {
         return DB::table('showroom')
             ->join('vehicle', 'vehicle.id', '=', 'showroom.car_id')
-            ->where('sold', '=', 'false')
+            ->where('sold', '=', '0')
             ->get();
     }
 
@@ -29,7 +29,7 @@ class Car extends Model
     {
         return count(DB::table('showroom')
             ->get()
-            ->where('sold', '=', 'true'));
+            ->where('sold', '=', '1'));
     }
 
     public static function getSoldCarsToday()
@@ -38,7 +38,7 @@ class Car extends Model
             ->selectRaw('sum(price)')
             ->where([
                 ['date_of_sell', '=', date('Y-m-d')],
-                ['sold', '=', 'true'],
+                ['sold', '=', '1'],
             ])
             ->get();
     }
@@ -49,7 +49,7 @@ class Car extends Model
             DB::raw("(count(id)) as total_price"),
             DB::raw("(DATE_FORMAT(date_of_sell, '%Y-%m-%d')) as sell_day")
         )
-            ->where('sold', '=', 'true')
+            ->where('sold', '=', '1')
             ->orderBy('date_of_sell', 'DESC')
             ->groupBy(DB::raw('date_of_sell'))
             ->get();
@@ -71,7 +71,7 @@ class Car extends Model
         return count(DB::table('showroom')
 
             ->where([
-                ['sold', '=', 'true'],
+                ['sold', '=', '1'],
                 ['date_of_sell', '>=', date('Y-01-01', strtotime('-1 year'))],
                 ['date_of_sell', '<=', date('Y-12-31', strtotime('-1 year'))],
             ])

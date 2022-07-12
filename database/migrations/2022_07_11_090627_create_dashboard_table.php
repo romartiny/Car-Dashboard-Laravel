@@ -14,17 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vehicle', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('model');
             $table->date('year');
         });
 
         Schema::create('showroom', function (Blueprint $table) {
             $table->id();
-            $table->integer('car_id');
+            $table->integer('car_id')->unsigned();
+            $table->foreign('car_id')->references('id')->on('vehicle');
             $table->string('color');
             $table->float('price');
-            $table->string('sold');
+            $table->boolean('sold');
             $table->date('date_of_sell');
         });
     }

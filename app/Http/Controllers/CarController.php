@@ -42,7 +42,8 @@ class CarController extends Controller
 
     public function getAvgLastYear()
     {
-        return Car::getSoldLastYear() / Car::getYearSold();
+        return empty(Car::getYearSold()) ? '0' :
+            Car::getSoldLastYear() / Car::getYearSold();
     }
 
 }
