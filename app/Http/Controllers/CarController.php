@@ -31,8 +31,8 @@ class CarController extends Controller
 
     public function getSumToday()
     {
-        return empty(Car::getSoldCarsToday()) ? '0' :
-            Car::getSoldCarsToday()->sum('sum(price)');
+        return empty(Car::getSoldCarsToday()) ? '0' : Car::getSoldCarsToday()
+            ->sum('sum(price)');
     }
 
     public function getSellForDay()
